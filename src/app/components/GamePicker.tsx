@@ -21,10 +21,10 @@ const GamePicker: React.FC<Props> = ({ games, picks, userPicks, onPickSelection 
   return (
     <div className="space-y-4">
       {games.map((game, index) => (
-        <div key={index} className="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <div key={index} className="flex flex-row justify-center items-center gap-2">
           <button
             onClick={() => onPickSelection(index, 'away')}
-            className={`w-full sm:w-40 py-2 px-4 rounded-lg font-semibold transition-colors ${
+            className={`w-24 py-2 px-2 rounded-lg font-semibold text-sm transition-colors ${
               picks[index] === 'away' || userPicks[index] === 0
                 ? game.away 
                 : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
@@ -35,7 +35,7 @@ const GamePicker: React.FC<Props> = ({ games, picks, userPicks, onPickSelection 
           <span className="text-gray-500">@</span>
           <button
             onClick={() => onPickSelection(index, 'home')}
-            className={`w-full sm:w-40 py-2 px-4 rounded-lg font-semibold transition-colors ${
+            className={`w-24 py-2 px-2 rounded-lg font-semibold text-sm transition-colors ${
               picks[index] === 'home' || userPicks[index] === 1
                 ? game.home 
                 : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
