@@ -4,7 +4,6 @@ import { mambetABI } from '../constants/mambetABI'
 
 export const useUserPicks = (week: number, numGames: number) => {
   const { address } = useAccount()
-  console.log(numGames);
   const { data, isError, isLoading } = useReadContract({
     address: '0xc938EB809b60B8Cfc86Cb1Ee2622A5aB1090fD30',
     abi: mambetABI,
@@ -22,12 +21,10 @@ export const useUserPicks = (week: number, numGames: number) => {
     
     // Get only the relevant bits (from right to left)
     const relevantBits = binaryString.slice(-numGames)
-    
     // Convert binary string to array of picks (0 for away, 1 for home)
-    return relevantBits.split('').map(Number).reverse()
+    return relevantBits.split('').map(Number)
   }
 
   const userPicks = data ? convertBytesToPicks(data as string, numGames) : []
-  console.log(userPicks);
   return { userPicks, isError, isLoading }
 }
