@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  color-scheme: dark light;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    background-color: #f8f8f8;
+    color: #181818;
+  }
+}
+
+@media screen and (min-width: 568px) {
+  .grid-cols-pannel {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .grid-cols-pannel {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .grid-cols-pannel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.loader {
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #ed61bc;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+
+/* Popup style */
+.popup-box {
+  position: fixed;
+  background: #21202079;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+ 
+.box {
+  position: relative;
+  margin: 0 auto;
+  height: auto;
+  max-height: 80vh;
+  margin-top: calc(100vh - 85vh - 20px);
+  overflow: auto;
+}
+
+/* NFL Team Button Styles */
+.ARI { background-color: #97233F; color: #FFFFFF; }
+.ATL { background-color: #A71930; color: #FFFFFF; }
+.BAL { background-color: #241773; color: #FFFFFF; }
+.BUF { background-color: #00338D; color: #FFFFFF; }
+.CAR { background-color: #0085CA; color: #FFFFFF; }
+.CHI { background-color: #0B162A; color: #FFFFFF; }
+.CIN { background-color: #FB4F14; color: #FFFFFF; }
+.CLE { background-color: #311D00; color: #FFFFFF; }
+.DAL { background-color: #003594; color: #FFFFFF; }
+.DEN { background-color: #FB4F14; color: #FFFFFF; }
+.DET { background-color: #0076B6; color: #FFFFFF; }
+.GB { background-color: #203731; color: #FFFFFF; }
+.HOU { background-color: #03202F; color: #FFFFFF; }
+.IND { background-color: #002C5F; color: #FFFFFF; }
+.JAX { background-color: #006778; color: #FFFFFF; }
+.KC { background-color: #E31837; color: #FFFFFF; }
+.LA { background-color: #003594; color: #FFFFFF; }
+.LAC { background-color: #0080C6; color: #FFFFFF; }
+.LV { background-color: #000000; color: #FFFFFF; }
+.MIA { background-color: #008E97; color: #FFFFFF; }
+.MIN { background-color: #4F2683; color: #FFFFFF; }
+.NE { background-color: #002244; color: #FFFFFF; }
+.NO { background-color: #D3BC8D; color: #000000; }
+.NYG { background-color: #0B2265; color: #FFFFFF; }
+.NYJ { background-color: #125740; color: #FFFFFF; }
+.PHI { background-color: #004C54; color: #FFFFFF; }
+.PIT { background-color: #FFB612; color: #000000; }
+.SF { background-color: #AA0000; color: #FFFFFF; }
+.SEA { background-color: #002244; color: #FFFFFF; }
+.TB { background-color: #D50A0A; color: #FFFFFF; }
+.TEN { background-color: #0C2340; color: #FFFFFF; }
+.WAS { background-color: #773141; color: #FFFFFF; }
