@@ -4,7 +4,7 @@ import { convertPicksToString } from '../utils/pickHelpers'
 import { mambetABI } from '../constants/mambetABI'
 
 const usePicksSubmission = () => {
-  const { writeContract, isError } = useWriteContract()
+  const { writeContract, isError: isPicksError, isPending: isLoading } = useWriteContract()
 
   const submitPicks = (picks: { [key: number]: 'away' | 'home' | null }, numGames: number) => {
     const picksString = convertPicksToString(picks)
@@ -20,7 +20,7 @@ const usePicksSubmission = () => {
     })
   }
 
-  return { submitPicks, isError }
+  return { submitPicks, isPicksError, isLoading }
 }
 
 export default usePicksSubmission

@@ -4,7 +4,8 @@ type Props = {
   onSubmit: () => void
   isLoading: boolean
   isError: boolean
-  error: Error
+  error: string | null
+  hasPicked: boolean
 }
 
 const SubmitButton: React.FC<Props> = ({ onSubmit, isLoading, isError, error, hasPicked }) => {
@@ -17,7 +18,7 @@ const SubmitButton: React.FC<Props> = ({ onSubmit, isLoading, isError, error, ha
       >
         {isLoading ? 'Submitting...' : hasPicked ? 'Picks Submitted' : 'Submit Picks (1 AVAX)'}
         {isError && (
-        <p className="text-red-500 mt-2">Error: {error?.message || 'An error occurred'}</p>
+        <p className="text-red-500 mt-2">Error: {error || 'An error occurred'}</p>
       )}
 
       </button>

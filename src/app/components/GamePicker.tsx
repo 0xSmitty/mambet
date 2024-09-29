@@ -9,6 +9,7 @@ type Game = {
 type Props = {
   games: Game[]
   picks: { [key: number]: 'away' | 'home' | null }
+  userPicks: { [key: number]: number }
   onPickSelection: (gameId: number, pick: 'away' | 'home') => void
 }
 

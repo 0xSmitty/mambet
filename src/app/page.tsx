@@ -13,11 +13,11 @@ import { useCurrentWeek } from './hooks/useCurrentWeek'
 function App() {
   const { address } = useAccount()
   const [picks, setPicks] = useState<{ [key: number]: 'away' | 'home' | null }>({})
-  const { submitPicks, isLoading, isError } = usePicksSubmission()
+  const { submitPicks, isPicksError, isLoading: isSubmitLoading } = usePicksSubmission()
   const { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
   
   const currentGames = currentWeek !== undefined ? games[currentWeek] : []
-  const { userPicks, isLoading: isPicksLoading, isError: isPicksError } = useUserPicks(currentWeek, currentGames.length);
+  const { userPicks, isLoading: isUserPicksLoading, isError: isUserPicksError } = useUserPicks(currentWeek, currentGames.length);
   const hasPicked = userPicks.length > 0;
   const handlePickSelection = (gameId: number, pick: 'away' | 'home') => {
     if(hasPicked) return;
@@ -34,7 +34,13 @@ function App() {
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8">NFL Pick'em</h1>
           <GamePicker games={currentGames} picks={picks} userPicks={userPicks} onPickSelection={handlePickSelection} />
-          <SubmitButton onSubmit={() => submitPicks(picks, currentGames.length)} isLoading={isLoading} hasPicked={hasPicked} />
+          <SubmitButton 
+            onSubmit={() => submitPicks(picks, currentGames.length)} 
+            hasPicked={hasPicked}
+            isLoading={isSubmitLoading}
+            isError={isPicksError}
+            error={isPicksError ? "Error submitting picks" : null}
+          />
         </div>
       ) : (
         <p className="text-center text-xl">Please connect your wallet to make picks.</p>
