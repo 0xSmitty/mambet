@@ -1,47 +1,46 @@
-import Image from "next/image";
 import { CustomButton } from "../Custom/CustomButton"
+import Image from "next/image";
 
 const Sidebar = ({
-        isOpen,
-        toggle,
-    }: {
-        isOpen: boolean;
-        toggle: () => void;
-    }): JSX.Element => {
+  isOpen,
+  toggle,
+}: {
+  isOpen: boolean;
+  toggle: () => void;
+}): JSX.Element => {
   return (
-    <>
-      <div
-        className="fixed w-full h-full overflow-hidden bg-[#808080] grid md:pt-[60px] left-0 z-10"
-        style={{
-          opacity: `${isOpen ? "1" : "0"}`,
-          top: ` ${isOpen ? "0" : "-100%"}`
-        }}
-      >
-         <div style={{
-                zIndex: -1,
-                position: "fixed",
-                width: "100vw",
-                height: "100vh"
-            }}>
-            </div>
+    <div
+      className={`fixed w-full h-full overflow-hidden bg-[#1a1a1a] left-0 z-20 transition-all duration-300 ease-in-out ${
+        isOpen ? "top-0" : "-top-full"
+      }`}
+    >
+      <div className="flex flex-col h-full p-5">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-white text-xl font-bold">Menu</h2>
+          <button className="p-2" onClick={toggle}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
         
-        <button className="absolute right-0 p-5" onClick={toggle}>
-        {/* Close icon */}
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"> 
-            <path
-              fill="currentColor"
-              d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
-            />
-          </svg>
-        </button>
-
-        <div className="flex justify-center w-full">
-            <div className="ml-auto flex justify-center">
-                {CustomButton()}
-            </div>
-		</div>
+        <div className="flex flex-col justify-center items-center flex-grow">
+          <div className="w-64 mb-8">
+            <CustomButton />
+          </div>
+          
+          <div className="flex gap-4 mt-auto">
+            <a href="https://twitter.com/HumpingUnic0rns" className="p-2 bg-[#EAEAEC] rounded-full">
+              <Image src='/twitter_logo.png' alt="Twitter" width={25} height={25} />
+            </a>
+            <a href="https://discord.gg/eKPsXYsDnE" className="p-2 bg-[#EAEAEC] rounded-full">
+              <Image src='/discord_logo.webp' alt="Discord" width={25} height={25} />
+            </a>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
