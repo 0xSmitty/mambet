@@ -32,3 +32,28 @@ export async function getMamboNameApi(winnerAddress: string) {
         throw new Error('No winner address provided');
     }
 }
+
+export async function getManyMamboNamesApi(addresses: string[]) {
+    if (addresses.length > 0) {
+        try {
+            const response = await fetch(`https://names.raffllrr.xyz/names`, {
+                method: 'POST',    
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ addresses: addresses }),
+            });
+
+            if (response.status >= 400) {
+                throw new Error('There was an error');
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw new Error('There was an error');
+        }
+    } else {
+        throw new Error('No addresses provided');
+    }
+}

@@ -17,3 +17,7 @@ export const games = [
 		{spread: -3.5, away: "SEA", home: "DET"}
 	]
 ]
+
+export const weekIdToString = [
+	"Week 4",
+]
