@@ -10,6 +10,7 @@ import { games } from './constants/games'
 import usePicksSubmission from './hooks/usePicksSubmission'
 import { useUserPicks } from './hooks/useUserPicks'
 import { useCurrentWeek } from './hooks/useCurrentWeek'
+import { useWeekInfo } from './hooks/useWeekInfo'
 
 function App() {
   const { address } = useAccount()
@@ -17,10 +18,12 @@ function App() {
   const [picks, setPicks] = useState<{ [key: number]: 'away' | 'home' | null }>({})
   const { submitPicks, isPicksError, isLoading: isSubmitLoading } = usePicksSubmission()
   const { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
-  
+  const { weekInfo, isLoading: isWeekInfoLoading, isError: isWeekInfoError } = useWeekInfo(currentWeek);
   const currentGames = currentWeek !== undefined ? games[currentWeek] : []
   const { userPicks, isLoading: isUserPicksLoading, isError: isUserPicksError } = useUserPicks(currentWeek, currentGames.length);
   const hasPicked = userPicks.length > 0;
+  const isClosed = weekInfo?.closed;
+
   const handlePickSelection = (gameId: number, pick: 'away' | 'home') => {
     if(hasPicked) return;
     setPicks(prevPicks => ({ ...prevPicks, [gameId]: pick }))
@@ -66,6 +69,7 @@ function App() {
                 isLoading={isSubmitLoading}
                 isError={isPicksError}
                 error={isPicksError ? "Error submitting picks" : null}
+                isClosed={isClosed}
               />
             </>
           ) : (
