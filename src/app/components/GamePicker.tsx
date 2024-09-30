@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 
 type Game = {
@@ -22,31 +22,51 @@ type Props = {
   onPickSelection: (gameId: number, pick: 'away' | 'home') => void
   viewOnly?: boolean
   gameResults?: GameResult[]
+  onCorrectPicksCount?: (count: number) => void
 }
 
-const GamePicker: React.FC<Props> = ({ games, picks, userPicks, onPickSelection, viewOnly = false, gameResults }) => {
+const GamePicker: React.FC<Props> = ({ 
+  games, 
+  picks, 
+  userPicks, 
+  onPickSelection, 
+  viewOnly = false, 
+  gameResults,
+  onCorrectPicksCount
+}) => {
   const formatSpread = (spread: number) => {
     return spread > 0 ? `+${spread}` : spread.toString()
   }
 
   const isPickCorrect = (game: Game, pick: 'away' | 'home', result: GameResult) => {
-    if( pick === 'home'){
+    if (pick === 'home') {
       return result.homeScore + game.spread > result.awayScore;
     }
     return result.homeScore + game.spread < result.awayScore;
   }
+
+  let correctPicksCount = 0;
+
+  useEffect(() => {
+    if (onCorrectPicksCount) {
+      console.log("correctPicksCount", correctPicksCount);
+      onCorrectPicksCount(correctPicksCount)
+    }
+  }, [correctPicksCount, onCorrectPicksCount])
 
   return (
     <div className="space-y-4">
       {games.map((game, index) => {
         const result = gameResults?.find(r => r.homeTeam === game.home && r.awayTeam === game.away)
         const userPick = userPicks[index] === 0 ? 'away' : userPicks[index] === 1 ? 'home' : null
-        const isCorrect = result?.completed && userPick ? isPickCorrect(game, userPick, result) : null
-        console.log("=======pick stuff========");
-        console.log(isCorrect);
-        console.log(result);
-        console.log(game);
-        console.log(userPick);
+        let isCorrect: boolean | null = null;
+
+        if (result?.completed && userPick) {
+          isCorrect = isPickCorrect(game, userPick, result)
+          if (isCorrect) {
+            correctPicksCount++;
+          }
+        }
         
         return (
           <div key={index} className="flex flex-row justify-center items-center gap-2">

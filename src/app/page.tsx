@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useAccount } from 'wagmi'
 import Navigation from './components/Navbar/Navigation'
 import GamePicker from './components/GamePicker'
@@ -69,7 +69,13 @@ function App() {
           </div>
           {activeTab === 'make-picks' ? (
             <>
-              <GamePicker games={currentGames} picks={picks} userPicks={userPicks} onPickSelection={handlePickSelection} viewOnly={isClosed} gameResults={gameResults}/>
+              <GamePicker 
+                games={currentGames} 
+                picks={picks} 
+                userPicks={userPicks} 
+                onPickSelection={handlePickSelection} 
+                viewOnly={isClosed} 
+                gameResults={gameResults}/>
               <SubmitButton 
                 onSubmit={() => submitPicks(picks, currentGames.length)} 
                 hasPicked={hasPicked}

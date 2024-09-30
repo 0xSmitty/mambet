@@ -13,6 +13,7 @@ const ViewPicks: React.FC = () => {
   const { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
   const [selectedWeek, setSelectedWeek] = useState<number | undefined>(currentWeek)
   const [selectedParticipant, setSelectedParticipant] = useState<string | null>(null)
+  const [correctPicksCount, setCorrectPicksCount] = useState(0)
   const { addressNames, fetchMissingNames } = useNameCache()
 
   const { picks: allPicks, participants, isLoading: isPicksLoading, isError: isPicksError } = useAllParticipantsPicks(selectedWeek)
@@ -29,6 +30,10 @@ const ViewPicks: React.FC = () => {
     }
     fetchMissingNames(participants)
   }, [participants, fetchMissingNames])
+
+  const handleCorrectPicksCount = useCallback((count: number) => {
+    setCorrectPicksCount(count)
+  }, [selectedWeek, selectedParticipant])
 
   if (isWeekLoading || isPicksLoading || isResultsLoading) return <p>Loading...</p>
   if (isWeekError || isPicksError || resultsError) return <p>Error loading data</p>
@@ -67,14 +72,20 @@ const ViewPicks: React.FC = () => {
         </select>
       </div>
       {selectedParticipant && (
-        <GamePicker
-          games={currentGames}
-          picks={{}}
-          userPicks={allPicks[selectedParticipant] || {}}
-          onPickSelection={() => {}}
-          viewOnly={true}
-          gameResults={gameResults}
-        />
+        <>
+          <div className="mb-4 text-center">
+            <span className="font-bold">Correct Picks: {correctPicksCount}</span>
+          </div>
+          <GamePicker
+            games={currentGames}
+            picks={{}}
+            userPicks={allPicks[selectedParticipant] || {}}
+            onPickSelection={() => {}}
+            viewOnly={true}
+            gameResults={gameResults}
+            onCorrectPicksCount={handleCorrectPicksCount}
+          />
+        </>
       )}
     </div>
   )
