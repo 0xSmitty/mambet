@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useCurrentWeek } from '../hooks/useCurrentWeek'
-import { games, weekIdToString } from '../constants/games'
+import { games, weekIdToWeekNumber } from '../constants/games'
 import GamePicker from './GamePicker'
 import { useAllParticipantsPicks } from '../hooks/useAllParticipantsPicks'
-import { useNameCache } from '../hooks/useNameCache';
+import { useNameCache } from '../hooks/useNameCache'
+import { useGameResults } from '../hooks/useGameResults'
 
 // Create a cache outside the component to persist across re-renders
 const nameCache: { [key: string]: string } = {}
@@ -16,6 +17,12 @@ const ViewPicks: React.FC = () => {
 
   const { picks: allPicks, participants, isLoading: isPicksLoading, isError: isPicksError } = useAllParticipantsPicks(selectedWeek)
 
+  let weekNumber = 0;
+  if(selectedWeek !== undefined) {
+    weekNumber = Number(weekIdToWeekNumber[selectedWeek]);
+  }
+  const { gameResults, isLoading: isResultsLoading, error: resultsError } = useGameResults(weekNumber)
+  
   useEffect(() => {
     if (participants.length > 0 && !selectedParticipant) {
       setSelectedParticipant(participants[0])
@@ -23,8 +30,8 @@ const ViewPicks: React.FC = () => {
     fetchMissingNames(participants)
   }, [participants, fetchMissingNames])
 
-  if (isWeekLoading || isPicksLoading) return <p>Loading...</p>
-  if (isWeekError || isPicksError) return <p>Error loading data</p>
+  if (isWeekLoading || isPicksLoading || isResultsLoading) return <p>Loading...</p>
+  if (isWeekError || isPicksError || resultsError) return <p>Error loading data</p>
 
   const weekOptions = Array.from({ length: Number(currentWeek) + 1 }, (_, i) => i)
   const currentGames = selectedWeek !== undefined ? games[selectedWeek] : []
@@ -40,7 +47,7 @@ const ViewPicks: React.FC = () => {
           className="border rounded p-1"
         >
           {weekOptions.map((week) => (
-            <option key={week} value={week}>{weekIdToString[week]}</option>
+            <option key={week} value={week}>{"Week" + weekIdToWeekNumber[week]}</option>
           ))}
         </select>
       </div>
@@ -66,6 +73,7 @@ const ViewPicks: React.FC = () => {
           userPicks={allPicks[selectedParticipant] || {}}
           onPickSelection={() => {}}
           viewOnly={true}
+          gameResults={gameResults}
         />
       )}
     </div>

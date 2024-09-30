@@ -6,11 +6,12 @@ import Navigation from './components/Navbar/Navigation'
 import GamePicker from './components/GamePicker'
 import SubmitButton from './components/SubmitButton'
 import ViewPicks from './components/ViewPicks'
-import { games } from './constants/games'
+import { games, weekIdToWeekNumber } from './constants/games'
 import usePicksSubmission from './hooks/usePicksSubmission'
 import { useUserPicks } from './hooks/useUserPicks'
 import { useCurrentWeek } from './hooks/useCurrentWeek'
 import { useWeekInfo } from './hooks/useWeekInfo'
+import { useGameResults } from './hooks/useGameResults'
 
 function App() {
   const { address } = useAccount()
@@ -23,6 +24,12 @@ function App() {
   const { userPicks, isLoading: isUserPicksLoading, isError: isUserPicksError } = useUserPicks(currentWeek, currentGames.length);
   const hasPicked = userPicks.length > 0;
   const isClosed = weekInfo?.closed;
+  let weekNumber = 0;
+  if(currentWeek !== undefined) {
+    weekNumber = Number(weekIdToWeekNumber[currentWeek]);
+  }
+
+  const { gameResults, isLoading: isResultsLoading, error: resultsError } = useGameResults(weekNumber)
 
   const handlePickSelection = (gameId: number, pick: 'away' | 'home') => {
     if(hasPicked) return;
@@ -62,7 +69,7 @@ function App() {
           </div>
           {activeTab === 'make-picks' ? (
             <>
-              <GamePicker games={currentGames} picks={picks} userPicks={userPicks} onPickSelection={handlePickSelection} viewOnly={isClosed}/>
+              <GamePicker games={currentGames} picks={picks} userPicks={userPicks} onPickSelection={handlePickSelection} viewOnly={isClosed} gameResults={gameResults}/>
               <SubmitButton 
                 onSubmit={() => submitPicks(picks, currentGames.length)} 
                 hasPicked={hasPicked}

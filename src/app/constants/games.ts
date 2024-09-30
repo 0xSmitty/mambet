@@ -9,7 +9,7 @@ export const games = [
 		{spread: 1.5, away: "PIT", home: "IND"},
 		{spread: -6, away: "JAX", home: "HOU"},
 		{spread: -10.5, away: "NE", home: "SF"},
-		{spread: -3.5, away: "WAS", home: "ARI"},
+		{spread: -3.5, away: "WSH", home: "ARI"},
 		{spread: -2, away: "CLE", home: "LV"},
 		{spread: 7, away: "KC", home: "LAC"},
 		{spread: -2.5, away: "BUF", home: "BAL"},
@@ -18,6 +18,6 @@ export const games = [
 	]
 ]
 
-export const weekIdToString = [
-	"Week 4",
+export const weekIdToWeekNumber = [
+	"4",
 ]
