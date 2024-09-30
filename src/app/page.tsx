@@ -62,7 +62,7 @@ function App() {
           </div>
           {activeTab === 'make-picks' ? (
             <>
-              <GamePicker games={currentGames} picks={picks} userPicks={userPicks} onPickSelection={handlePickSelection} viewOnly={false}/>
+              <GamePicker games={currentGames} picks={picks} userPicks={userPicks} onPickSelection={handlePickSelection} viewOnly={isClosed}/>
               <SubmitButton 
                 onSubmit={() => submitPicks(picks, currentGames.length)} 
                 hasPicked={hasPicked}
