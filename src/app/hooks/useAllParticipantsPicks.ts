@@ -21,7 +21,7 @@ export const useAllParticipantsPicks = (week: number | undefined) => {
     abi: mambetABI,
     functionName: 'getWeekPicks',
     args: [week, participantsData],
-    enabled: week !== undefined && participantsData !== undefined,
+    query: { enabled: week !== undefined && participantsData !== undefined },
   })
 
   useEffect(() => {
