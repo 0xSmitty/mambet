@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useReadContract } from 'wagmi'
 import { mambetABI } from '../constants/mambetABI'
 import { contractAddress } from '../constants/contractAddress'
+import { convertBytesToPicks } from '../utils/pickHelpers'
+import { useWeekInfo } from './useWeekInfo'
 
 export const useAllParticipantsPicks = (week: number | undefined) => {
   const [picks, setPicks] = useState<{ [address: string]: { [gameId: number]: number } }>({})
@@ -10,13 +12,8 @@ export const useAllParticipantsPicks = (week: number | undefined) => {
   const [isError, setIsError] = useState(false)
 
   // Get participants for the week
-  const { data: participantsData, error: participantsError, isLoading: isParticipantsLoading } = useReadContract({
-    address: contractAddress,
-    abi: mambetABI,
-    functionName: 'getWeekParticipants',
-    args: [week],
-    enabled: week !== undefined,
-  }) as { data: string[] | undefined, error: Error | null, isLoading: boolean }
+  const { weekInfo, isLoading: isWeekInfoLoading, isError: isWeekInfoError } = useWeekInfo(week);
+  const participantsData = weekInfo?.participants || []
 
   // Get picks for the participants
   const { data: picksData, error: picksError, isLoading: isPicksLoading } = useReadContract({
@@ -28,23 +25,21 @@ export const useAllParticipantsPicks = (week: number | undefined) => {
   })
 
   useEffect(() => {
-    if (participantsError || picksError) {
+    if (isWeekInfoError || picksError) {
       setIsError(true)
       setIsLoading(false)
       return
     }
 
-    if (!isParticipantsLoading && !isPicksLoading && participantsData && picksData) {
+    if (!isWeekInfoLoading && !isPicksLoading && participantsData && picksData) {
       setParticipants(participantsData as string[])
       
       const parsedPicks: { [address: string]: { [gameId: number]: number } } = {}
       
       ;(picksData as string[]).forEach((pickBytes32, index) => {
-        const address = participantsData![index]
-        const binaryString = BigInt(pickBytes32).toString(2).padStart(256, '0')
-        const pickArray = binaryString.split('').reverse().map(Number)
-        
-        parsedPicks[address] = {}
+		const address = participantsData[index]
+        const pickArray = convertBytesToPicks(pickBytes32, weekInfo?.numGames || 0)
+                parsedPicks[participantsData[index]] = {}
         pickArray.forEach((pick, gameId) => {
           parsedPicks[address][gameId] = pick
         })
@@ -54,7 +49,7 @@ export const useAllParticipantsPicks = (week: number | undefined) => {
       setIsLoading(false)
       setIsError(false)
     }
-  }, [participantsData, picksData, isParticipantsLoading, isPicksLoading, participantsError, picksError])
+  }, [participantsData, picksData, isWeekInfoLoading, isPicksLoading, isWeekInfoError, picksError])
 
   return { picks, participants, isLoading, isError }
 }

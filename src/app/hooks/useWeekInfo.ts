@@ -13,7 +13,7 @@ interface Week {
   winner: Address
 }
 
-export const useWeekInfo = (week: number) => {
+export const useWeekInfo = (week: number | undefined) => {
   const { data, isError, isLoading } = useReadContract({
     address: '0xc938EB809b60B8Cfc86Cb1Ee2622A5aB1090fD30',
     abi: mambetABI,
