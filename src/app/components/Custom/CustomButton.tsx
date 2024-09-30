@@ -2,32 +2,19 @@
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useDisconnect, useAccount } from 'wagmi';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useNameCache } from '../../hooks/useNameCache';
 
 export const CustomButton = () => {
-  const [username, setUsername] = useState(null);
   const { disconnect } = useDisconnect();
-  const accountStatus = useAccount();
+  const { address } = useAccount();
+  const { addressNames, fetchMissingNames } = useNameCache();
 
   useEffect(() => {
-    const fetchUsername = async () => {
-      if (accountStatus?.address) {
-        try {
-          const response = await axios.post(`https://names.raffllrr.xyz/names`, {
-            addresses: [accountStatus.address]
-          });
-          const usernameData = response.data[accountStatus.address];
-          setUsername(usernameData.mamboName || usernameData.avvyName || null);
-        } catch (error) {
-          setUsername(null);
-          console.error('Error fetching username:', error);
-        }
-      }
-    };
-    
-    fetchUsername();
-  }, [accountStatus.address]);
+    if (address) {
+      fetchMissingNames([address]);
+    }
+  }, [address, fetchMissingNames]);
 
   return (
     <ConnectButton.Custom>
@@ -95,7 +82,9 @@ export const CustomButton = () => {
                     onClick={openAccountModal} 
                     type="button"
                   >
-                    <span className="mr-2">{username || account.displayName}</span>
+                    <span className="mr-2">
+                      {addressNames[account.address] || account.displayName}
+                    </span>
                     {account.ensAvatar && <span className="mr-2">{account.ensAvatar}</span>}
                     {account.displayBalance && (
                       <span className="text-[#8d99ae]">({account.displayBalance})</span>
