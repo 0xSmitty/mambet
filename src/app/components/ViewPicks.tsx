@@ -52,7 +52,7 @@ const ViewPicks: React.FC = () => {
           className="border rounded p-1"
         >
           {weekOptions.map((week) => (
-            <option key={week} value={week}>{"Week" + weekIdToWeekNumber[week]}</option>
+            <option key={week} value={week}>{"Week " + weekIdToWeekNumber[week]}</option>
           ))}
         </select>
       </div>
