@@ -1,4 +1,4 @@
-import { Game, GameResult } from "../components/GamePicker";
+import { Game, GameResult, PickResult } from "../components/GamePicker";
 import { games } from "../constants/games";
 
 export const convertPicksToString = (picks: { [key: number]: 'away' | 'home' | null }) => {
