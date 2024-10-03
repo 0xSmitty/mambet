@@ -1,17 +1,21 @@
-import { useReadContract } from 'wagmi'
-import { useAccount } from 'wagmi'
+import { useReadContract, useAccount } from 'wagmi'
+import { useMemo } from 'react'
 import { mambetABI } from '../constants/mambetABI'
 import { convertBytesToPicks } from '../utils/pickHelpers'
+import { contractAddress } from '../constants/contractAddress'
 
-export const useUserPicks = (week: number, numGames: number) => {
+export const useUserPicks = (week: number | undefined, numGames: number) => {
   const { address } = useAccount()
   const { data, isError, isLoading } = useReadContract({
-    address: '0xc938EB809b60B8Cfc86Cb1Ee2622A5aB1090fD30',
+    address: contractAddress,
     abi: mambetABI,
     functionName: 'getUserPicks',
     args: [address, week],
   })
 
-  const userPicks = data ? convertBytesToPicks(data as string, numGames) : []
+  const userPicks = useMemo(() => {
+    return data ? convertBytesToPicks(data as string, numGames) : []
+  }, [data, numGames])
+
   return { userPicks, isError, isLoading }
 }

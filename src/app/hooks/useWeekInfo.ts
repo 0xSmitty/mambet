@@ -1,7 +1,7 @@
 import { useReadContract } from 'wagmi'
 import { mambetABI } from '../constants/mambetABI'
 import { Address } from 'viem'
-
+import { contractAddress } from '../constants/contractAddress'
 // Define the Week interface to match the Solidity struct
 interface Week {
   entryFee: bigint
@@ -15,7 +15,7 @@ interface Week {
 
 export const useWeekInfo = (week: number | undefined) => {
   const { data, isError, isLoading } = useReadContract({
-    address: '0xc938EB809b60B8Cfc86Cb1Ee2622A5aB1090fD30',
+    address: contractAddress,
     abi: mambetABI,
     functionName: 'getWeekInfo',
     args: [week],
