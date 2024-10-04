@@ -111,3 +111,52 @@
 .TB { background-color: #D50A0A; color: #FFFFFF; }
 .TEN { background-color: #0C2340; color: #FFFFFF; }
 .WAS { background-color: #773141; color: #FFFFFF; }
+
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  display: flex;
+  animation: ticker 30s linear infinite;
+  width: 200%; /* Adjust this as needed */
+}
+
+.ticker-wrapper {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 8px;
+  padding: 12px 0;
+  margin-top: 16px;
+}
+
+.ticker-content {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+
+.ticker-content:hover {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-right: 12px;
+  background-color: #3a3a3a;
+  color: #e0e0e0;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.ticker-item:hover {
+  background-color: #4a4a4a;
+}

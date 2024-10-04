@@ -3,9 +3,10 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import Navigation from './components/Navbar/Navigation'
-import GamePicker, { Game, GameResult, PickResult } from './components/GamePicker'
+import GamePicker from './components/GamePicker'
 import SubmitButton from './components/SubmitButton'
 import ViewPicks from './components/ViewPicks'
+import WeekInfoDisplay from './components/WeekInfoDisplay'
 import { games, weekIdToWeekNumber } from './constants/games'
 import usePicksSubmission from './hooks/usePicksSubmission'
 import { useUserPicks } from './hooks/useUserPicks'
@@ -106,6 +107,9 @@ function App() {
       {address ? (
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8">NFL Pick'em</h1>
+          {weekInfo && !isWeekInfoLoading && !isWeekInfoError && (
+            <WeekInfoDisplay prizePool={weekInfo.prizePool} participants={weekInfo.participants} />
+          )}
           <div className="flex justify-center mb-6">
             <button
               className={`px-6 py-2 mr-4 rounded-full font-semibold transition-colors duration-200 ${
