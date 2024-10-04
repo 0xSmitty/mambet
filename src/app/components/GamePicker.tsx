@@ -1,10 +1,13 @@
 import React from 'react'
 import { FaCheck, FaTimes, FaMinus } from 'react-icons/fa'
+import Image from 'next/image'
 
 export type Game = {
   spread: number
   away: string
   home: string
+  awayLogo?: string
+  homeLogo?: string
 }
 
 export type GameResult = {
@@ -54,33 +57,43 @@ const GamePicker: React.FC<Props> = ({
       {games.map((game, index) => {
         const result = pickResults ? pickResults[index] : null;
         return (
-          <div key={index} className="flex flex-row justify-center items-center gap-2">
-            <button
-              onClick={() => !viewOnly && onPickSelection(index, 'away')}
-              disabled={viewOnly}
-              className={`w-24 py-2 px-2 rounded-lg font-semibold text-sm transition-colors ${
-                picks[index] === 'away'
-                  ? game.away 
-                  : 'bg-gray-200 text-gray-800'
-              } ${!viewOnly && 'hover:opacity-80'} ${viewOnly && 'cursor-default'}`}
-            >
-              {`${game.away} ${formatSpread(-game.spread)}`}
-            </button>
-            <span className="text-gray-500">@</span>
-            <button
-              onClick={() => !viewOnly && onPickSelection(index, 'home')}
-              disabled={viewOnly}
-              className={`w-24 py-2 px-2 rounded-lg font-semibold text-sm transition-colors ${
-                picks[index] === 'home'
-                  ? game.home 
-                  : 'bg-gray-200 text-gray-800'
-              } ${!viewOnly && 'hover:opacity-80'} ${viewOnly && 'cursor-default'}`}
-            >
-              {`${game.home} ${formatSpread(game.spread)}`}
-            </button>
-            <span className="w-6 flex justify-center">
-              {result && renderResultIcon(result)}
-            </span>
+          <div key={index} className="flex justify-center items-center relative">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => !viewOnly && onPickSelection(index, 'away')}
+                disabled={viewOnly}
+                className={`w-32 py-2 px-2 rounded-lg font-semibold text-sm transition-colors ${
+                  picks[index] === 'away'
+                    ? game.away 
+                    : 'bg-gray-200 text-gray-800'
+                } ${!viewOnly && 'hover:opacity-80'} ${viewOnly && 'cursor-default'}`}
+              >
+                <span>{`${game.away} ${formatSpread(-game.spread)}`}</span>
+              </button>
+              {game.awayLogo && (
+                  <Image src={game.awayLogo} alt={`${game.away} logo`} width={40} height={40} className="inline mr-2" />
+                )}
+              <span className="text-gray-500">@</span>
+              {game.homeLogo && (
+                  <Image src={game.homeLogo} alt={`${game.home} logo`} width={40} height={40} className="inline ml-2" />
+                )}
+
+              <button
+                onClick={() => !viewOnly && onPickSelection(index, 'home')}
+                disabled={viewOnly}
+                className={`w-32 py-2 px-2 rounded-lg font-semibold text-sm transition-colors ${
+                  picks[index] === 'home'
+                    ? game.home 
+                    : 'bg-gray-200 text-gray-800'
+                } ${!viewOnly && 'hover:opacity-80'} ${viewOnly && 'cursor-default'}`}
+              >                <span>{`${game.home} ${formatSpread(game.spread)}`}</span>
+              </button>
+            </div>
+            {result && (
+              <span className="absolute right-0 w-6 flex justify-center">
+                {renderResultIcon(result)}
+              </span>
+            )}
           </div>
         )
       })}

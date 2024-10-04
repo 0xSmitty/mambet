@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 
 interface GameResult {
   homeTeam: string
+  homeTeamLogoURL: string
   awayTeam: string
+  awayTeamLogoURL: string
   homeScore: number
   awayScore: number
   completed: boolean
@@ -28,7 +30,9 @@ export const useGameResults = (week: number | undefined) => {
           const [home, away] = competition.competitors
           return {
             homeTeam: home.team.abbreviation,
+            homeTeamLogoURL: home.team.logo,
             awayTeam: away.team.abbreviation,
+            awayTeamLogoURL: away.team.logo,
             homeScore: parseInt(home.score),
             awayScore: parseInt(away.score),
             completed: event.status.type.completed

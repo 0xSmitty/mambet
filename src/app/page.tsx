@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import Navigation from './components/Navbar/Navigation'
-import GamePicker, { PickResult } from './components/GamePicker'
+import GamePicker, { Game, PickResult } from './components/GamePicker'
 import SubmitButton from './components/SubmitButton'
 import ViewPicks from './components/ViewPicks'
 import WeekInfoDisplay from './components/WeekInfoDisplay'
@@ -24,7 +24,8 @@ function App() {
   const { submitPicks, isPicksError, isLoading: isSubmitLoading, isSuccess } = usePicksSubmission()
   const { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
   const { weekInfo, isLoading: isWeekInfoLoading, isError: isWeekInfoError } = useWeekInfo(currentWeek);
-  const currentGames = currentWeek !== undefined ? games[currentWeek] : []
+  const [currentGames, setCurrentGames] = useState<Game[]>([])
+  const [pickResults, setPickResults] = useState<{ [key: number]: PickResult }>({})
 
   const isClosed = weekInfo?.closed;
   let weekNumber = 0;
@@ -51,22 +52,29 @@ function App() {
     setPicks(prevPicks => ({ ...prevPicks, [gameId]: pick }))
   }
 
-  const [pickResults, setPickResults] = useState<{ [key: number]: PickResult }>({})
-
   useEffect(() => {
-    if (gameResults && picks && currentWeek !== undefined) {
-      const newPickResults = games[currentWeek].reduce((acc, game, index) => {
+    if (gameResults && currentWeek !== undefined) {
+      const updatedGames = games[currentWeek].map((game, index) => {
         const result = gameResults.find(r => r.homeTeam === game.home && r.awayTeam === game.away)
-        if (result?.completed && picks[index]) {
-          acc[index] = getPickResult(game, picks[index], result)
-        } else {
-          acc[index] = 'pending'
+        let pickResult: PickResult = 'pending'
+
+        if (result) {
+          game.awayLogo = result.awayTeamLogoURL
+          game.homeLogo = result.homeTeamLogoURL
+
+          if (result.completed && picks[index]) {
+            pickResult = getPickResult(game, picks[index], result)
+          }
         }
-        return acc
-      }, {} as { [key: number]: PickResult })
-      setPickResults(newPickResults)
+
+        setPickResults(prev => ({ ...prev, [index]: pickResult }))
+
+        return game
+      })
+
+      setCurrentGames(updatedGames)
     }
-  }, [gameResults, picks, currentWeek])
+  }, [gameResults, currentWeek, picks])
 
   const correctPicksCount = Object.values(pickResults).filter(result => result === 'correct').length
 

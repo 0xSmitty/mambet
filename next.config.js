@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      domains: ['ipfs.io'],
+      domains: ['ipfs.io', 'a.espncdn.com'],
     },
     experimental: {
         serverActions: true,
