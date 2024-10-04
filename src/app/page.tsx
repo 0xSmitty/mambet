@@ -104,7 +104,6 @@ function App() {
   return (
     <div className="container mx-auto px-4 py-8">
       <Navigation />
-      {address ? (
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold text-center mb-8">NFL Pick'em</h1>
           {weekInfo && !isWeekInfoLoading && !isWeekInfoError && (
@@ -145,6 +144,7 @@ function App() {
                 viewOnly={isClosed} 
                 pickResults={pickResults}
               />
+              {address ? (
               <SubmitButton 
                 onSubmit={() => submitPicks(picks, currentGames.length, hasPicked)} 
                 hasPicked={hasPicked}
@@ -154,14 +154,12 @@ function App() {
                 isClosed={isClosed}
                 isFilledOut={Object.keys(picks).length === currentGames.length}
               />
+              ) : null}
             </>
           ) : (
             <ViewPicks />
           )}
         </div>
-      ) : (
-        <p className="text-center text-xl">Please connect your wallet to make picks.</p>
-      )}
     </div>
   )
 }
