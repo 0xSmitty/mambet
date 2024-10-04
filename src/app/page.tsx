@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import Navigation from './components/Navbar/Navigation'
-import GamePicker from './components/GamePicker'
+import GamePicker, { PickResult } from './components/GamePicker'
 import SubmitButton from './components/SubmitButton'
 import ViewPicks from './components/ViewPicks'
 import WeekInfoDisplay from './components/WeekInfoDisplay'
