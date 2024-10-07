@@ -90,7 +90,7 @@ const GamePicker: React.FC<Props> = ({
               </button>
             </div>
             {result && (
-              <span className="absolute right-0 w-6 flex justify-center">
+              <span className="right-0 w-6 flex justify-center">
                 {renderResultIcon(result)}
               </span>
             )}
