@@ -28,7 +28,7 @@ function App() {
   const [pickResults, setPickResults] = useState<{ [key: number]: PickResult }>({})
 
   const isClosed = weekInfo?.closed;
-  let weekNumber = 0;
+  let weekNumber = undefined;
   if(currentWeek !== undefined) {
     weekNumber = Number(weekIdToWeekNumber[currentWeek]);
   }
