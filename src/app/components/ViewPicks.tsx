@@ -10,7 +10,11 @@ import { useGameResults } from '../hooks/useGameResults'
 const nameCache: { [key: string]: string } = {}
 
 const ViewPicks: React.FC = () => {
-  const { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
+  let { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
+  if(currentWeek !== undefined && games[currentWeek] === undefined) {
+    currentWeek = currentWeek - 1;
+  }
+
   const [selectedWeek, setSelectedWeek] = useState<number | undefined>(currentWeek)
   const [selectedParticipant, setSelectedParticipant] = useState<string | null>(null)
   const [correctPicks, setCorrectPicks] = useState<{ [key: number]: boolean }>({})

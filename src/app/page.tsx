@@ -22,14 +22,25 @@ function App() {
   const [picks, setPicks] = useState<{ [key: number]: 'away' | 'home' | null }>({})
   const [hasPicked, setHasPicked] = useState(false);
   const { submitPicks, isPicksError, isLoading: isSubmitLoading, isSuccess } = usePicksSubmission()
-  const { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
+  let { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
+
+  let weekNumber = undefined;
+  if(currentWeek !== undefined) {
+    if(games[currentWeek] === undefined) {
+      currentWeek = currentWeek - 1;
+    }
+    weekNumber = Number(weekIdToWeekNumber[currentWeek]);
+  }
+
   const { weekInfo, isLoading: isWeekInfoLoading, isError: isWeekInfoError } = useWeekInfo(currentWeek);
   const [currentGames, setCurrentGames] = useState<Game[]>([])
   const [pickResults, setPickResults] = useState<{ [key: number]: PickResult }>({})
 
   const isClosed = weekInfo?.closed;
-  let weekNumber = undefined;
   if(currentWeek !== undefined) {
+    if(games[currentWeek] === undefined) {
+      currentWeek = currentWeek - 1;
+    }
     weekNumber = Number(weekIdToWeekNumber[currentWeek]);
   }
 
