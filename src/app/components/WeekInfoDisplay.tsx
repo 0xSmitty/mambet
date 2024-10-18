@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { formatEther } from 'viem'
-import { getManyMamboNamesApi } from '../services/actions/getMamboName'
+import { useNameCache } from '../hooks/useNameCache'
 
 interface WeekInfoDisplayProps {
   prizePool: bigint
@@ -17,27 +17,23 @@ interface MamboNameData {
 }
 
 const WeekInfoDisplay: React.FC<WeekInfoDisplayProps> = ({ prizePool, participants }) => {
-  const [mamboNames, setMamboNames] = useState<{[key: string]: MamboNameData}>({})
+  const { addressNames, fetchMissingNames } = useNameCache()
 
   useEffect(() => {
-    const fetchMamboNames = async () => {
+    const updateNames = async (participants: string[]) => {
       try {
-        const names = await getManyMamboNamesApi(participants)
-        setMamboNames(names)
+        await fetchMissingNames(participants)
       } catch (error) {
         console.error('Error fetching Mambo names:', error)
       }
     }
 
-    fetchMamboNames()
+    updateNames(participants)
   }, [participants])
 
   const getDisplayName = (address: string): string => {
-    const data = mamboNames[address]
-    if (data) {
-      return data.mamboName || data.avvyName || address.slice(0, 6) + '...'
-    }
-    return address.slice(0, 6) + '...'
+    const name = addressNames[address]
+    return name || address.slice(0, 6) + '...'
   }
 
   const participantSpans = participants.map((participant, index) => (

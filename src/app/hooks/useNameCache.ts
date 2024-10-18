@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { getManyMamboNamesApi } from '../services/actions/getMamboName';
+import { mamboProfileInstance } from '../services/mamboProfileInstance';
 
 const globalNameCache: { [key: string]: string } = {};
 
@@ -11,16 +11,19 @@ export function useNameCache() {
     if (missingAddresses.length === 0) return;
 
     try {
-      const data = await getManyMamboNamesApi(missingAddresses);
-      const newNames = Object.fromEntries(
-        Object.entries(data).map(([address, nameData]: [string, any]) => [
-          address,
-          nameData.mamboName || nameData.avvyName || address
-        ])
-      );
+      const profiles = await mamboProfileInstance.getManyProfiles(missingAddresses);
       
-      Object.assign(globalNameCache, newNames);
-      setAddressNames({...globalNameCache});
+      if (profiles !== undefined) {
+        const newNames = Object.entries(profiles).reduce((acc, [address, profile]) => {
+          acc[address] = profile.mamboName || profile.avvyName || address;
+          return acc;
+        }, {} as Record<string, string>);
+        
+        Object.assign(globalNameCache, newNames);
+        setAddressNames({...globalNameCache});
+      } else {
+        console.error('Profiles is not an object:', profiles);
+      }
     } catch (error) {
       console.error('Error fetching names:', error);
     }
