@@ -3,9 +3,6 @@ const nextConfig = {
     images: {
       domains: ['ipfs.io', 'a.espncdn.com'],
     },
-    experimental: {
-        serverActions: true,
-    },
     async headers() {
         return [
             {
