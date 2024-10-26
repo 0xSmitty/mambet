@@ -21,8 +21,8 @@ importers:
         specifier: ^1.7.7
         version: 1.7.7
       mambo-profiles:
-        specifier: ^0.0.5
-        version: 0.0.5(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.23.8)
+        specifier: ^0.0.6
+        version: 0.0.6(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.23.8)
       next:
         specifier: 14.2.4
         version: 14.2.4(@babel/core@7.25.8(supports-color@9.4.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2961,8 +2961,8 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
-  mambo-profiles@0.0.5:
-    resolution: {integrity: sha512-CcuSmzm2hz2A/eOHv3S1Eev4xi7pujcW2TbhunmBu2SoRUzBYDpgCExgLFcNGVPp9Lm+T4pABk1Bv62tWtXCEg==}
+  mambo-profiles@0.0.6:
+    resolution: {integrity: sha512-gqAJCufZ2jEDfEezuDOG6iIytmmxzOuMImN6U5ZINBxzblk2JTcqIExPIH3LSwLcQFmI2Xq62wBvaMDDlxGtfA==}
 
   marky@1.2.5:
     resolution: {integrity: sha512-q9JtQJKjpsVxCRVgQ+WapguSbKC3SQ5HEzFGPAJMStgh3QjCawp00UKv3MTTAArTmGmmPUvllHZoNbZ3gs0I+Q==}
@@ -8105,7 +8105,7 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  mambo-profiles@0.0.5(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.23.8):
+  mambo-profiles@0.0.6(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.23.8):
     dependencies:
       viem: 2.21.29(bufferutil@4.0.8)(typescript@5.6.3)(utf-8-validate@5.0.10)(zod@3.23.8)
     transitivePeerDependencies:

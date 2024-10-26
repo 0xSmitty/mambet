@@ -47,10 +47,28 @@ export const games: Game[][] = [
 		{spread: 3.5, away: "BAL", home: "TB"},
 		{spread: 2, away: "LAC", home: "ARI"},
 	],
+	[
+		{spread: 8.5, away: "BAL", home: "CLE"},
+		{spread: -11, away: "TEN", home: "DET"},
+		{spread: -5, away: "IND", home: "HOU"},
+		{spread: 3.5, away: "GB", home: "JAX"},
+		{spread: -3.5, away: "ARI", home: "MIA"},
+		{spread: 7, away: "NYJ", home: "NE"},
+		{spread: 2.5, away: "ATL", home: "TB"},
+		{spread: -2.5, away: "PHI", home: "CIN"},
+		{spread: -7.5, away: "NO", home: "LAC"},
+		{spread: 3, away: "BUF", home: "SEA"},
+		{spread: 2.5, away: "CHI", home: "WSH"},
+		{spread: -10, away: "CAR", home: "DEN"},
+		{spread: 9.5, away: "KC", home: "LV"},
+		{spread: -4, away: "DAL", home: "SF"},
+		{spread: -6, away: "NYG", home: "PIT"},
+	],
 ]
 
 export const weekIdToWeekNumber: string[] = [
 	"5",
 	"6",
-	"7"
+	"7",
+	"8"
 ]
