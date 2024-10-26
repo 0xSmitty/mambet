@@ -5,6 +5,7 @@ import GamePicker, { Game, GameResult, PickResult } from './GamePicker'
 import { useAllParticipantsPicks } from '../hooks/useAllParticipantsPicks'
 import { useNameCache } from '../hooks/useNameCache'
 import { useGameResults } from '../hooks/useGameResults'
+import { Address } from 'viem'
 
 // Create a cache outside the component to persist across re-renders
 const nameCache: { [key: string]: string } = {}
@@ -16,7 +17,7 @@ const ViewPicks: React.FC = () => {
   }
 
   const [selectedWeek, setSelectedWeek] = useState<number | undefined>(currentWeek)
-  const [selectedParticipant, setSelectedParticipant] = useState<string | null>(null)
+  const [selectedParticipant, setSelectedParticipant] = useState<Address | null>(null)
   const [correctPicks, setCorrectPicks] = useState<{ [key: number]: boolean }>({})
 
   const { addressNames, fetchMissingNames } = useNameCache()
@@ -102,7 +103,7 @@ const ViewPicks: React.FC = () => {
         <select
           id="participant-select"
           value={selectedParticipant || ''}
-          onChange={(e) => setSelectedParticipant(e.target.value)}
+          onChange={(e) => setSelectedParticipant(e.target.value as Address)}
           className="border rounded p-1"
         >
           {participants.map((participant) => (

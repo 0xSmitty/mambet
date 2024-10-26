@@ -1,12 +1,13 @@
 import { useState, useCallback } from 'react';
 import { mamboProfileInstance } from '../services/mamboProfileInstance';
+import { Address } from 'viem';
 
 const globalNameCache: { [key: string]: string } = {};
 
 export function useNameCache() {
   const [addressNames, setAddressNames] = useState<{[key: string]: string}>(globalNameCache);
 
-  const fetchMissingNames = useCallback(async (addresses: string[]) => {
+  const fetchMissingNames = useCallback(async (addresses: Address[]) => {
     const missingAddresses = addresses.filter(addr => !globalNameCache[addr]);
     if (missingAddresses.length === 0) return;
 

@@ -4,10 +4,10 @@ import { mambetABI } from '../constants/mambetABI'
 import { contractAddress } from '../constants/contractAddress'
 import { convertBytesToPicks } from '../utils/pickHelpers'
 import { useWeekInfo } from './useWeekInfo'
-
+import { Address } from 'viem'
 export const useAllParticipantsPicks = (week: number | undefined) => {
   const [picks, setPicks] = useState<{ [address: string]: { [gameId: number]: number } }>({})
-  const [participants, setParticipants] = useState<string[]>([])
+  const [participants, setParticipants] = useState<Address[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
 
@@ -32,7 +32,7 @@ export const useAllParticipantsPicks = (week: number | undefined) => {
     }
 
     if (!isWeekInfoLoading && !isPicksLoading && participantsData && picksData) {
-      setParticipants(participantsData as string[])
+      setParticipants(participantsData)
       
       const parsedPicks: { [address: string]: { [gameId: number]: number } } = {}
       

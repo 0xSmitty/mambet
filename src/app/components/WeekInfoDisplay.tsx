@@ -3,14 +3,15 @@
 import React, { useEffect, useState } from 'react'
 import { formatEther } from 'viem'
 import { useNameCache } from '../hooks/useNameCache'
+import { Address } from 'viem'
 
 interface WeekInfoDisplayProps {
   prizePool: bigint
-  participants: string[]
+  participants: Address[]
 }
 
 interface MamboNameData {
-  address: string
+  address: Address
   avvyName?: string
   mamboName?: string
   // Add other properties if needed
@@ -20,7 +21,7 @@ const WeekInfoDisplay: React.FC<WeekInfoDisplayProps> = ({ prizePool, participan
   const { addressNames, fetchMissingNames } = useNameCache()
 
   useEffect(() => {
-    const updateNames = async (participants: string[]) => {
+    const updateNames = async (participants: Address[]) => {
       try {
         await fetchMissingNames(participants)
       } catch (error) {
