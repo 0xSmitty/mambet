@@ -133,5 +133,6 @@ export const weekIdToWeekNumber: string[] = [
 	"8",
 	"9",
 	"10",
-	"11"
+	"11",
+	"12"
 ]
