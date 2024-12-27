@@ -52,7 +52,7 @@ def get_nfl_lines(week: int):
 
 if __name__ == "__main__":
     # Example usage
-    week = 16  # Change this to the desired week
+    week = 17  # Change this to the desired week
     lines = get_nfl_lines(week)
     # Print each game on a single line with minimal whitespace
     print("[")
