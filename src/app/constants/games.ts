@@ -18,3 +18,7 @@ export const games: Game[][] = [
 		{"spread": 1.5, "away": "MIN", "home": "CHI"}
 	]
 ]
+
+export const weekIdToWeekNumber: string[] = [
+	"1",
+]
