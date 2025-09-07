@@ -1,14 +1,16 @@
 import requests
 import json
 import time
+import datetime
 
 def get_nfl_lines(week: int):
     # Get the scoreboard data for the specified week
-    scoreboard_url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2024&seasontype=2&week={week}"
+    scoreboard_url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2025&seasontype=2&week={week}"
     scoreboard_response = requests.get(scoreboard_url)
     scoreboard_data = scoreboard_response.json()
 
     games_data = []
+    earliest_ts = None
     
     # Process each game in the events array
     for game in scoreboard_data.get('events', []):
@@ -18,6 +20,18 @@ def get_nfl_lines(week: int):
             
         game_id = game['id']
         competitors = game['competitions'][0]['competitors']
+        
+        # Capture start time
+        date_str = game.get('date')
+        start_ts = None
+        if date_str:
+            try:
+                dt = datetime.datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+                start_ts = int(dt.timestamp())
+                if earliest_ts is None or start_ts < earliest_ts:
+                    earliest_ts = start_ts
+            except (ValueError, TypeError):
+                start_ts = None
         
         # Find home and away teams
         home_team = next(team['team']['abbreviation'] 
@@ -48,12 +62,12 @@ def get_nfl_lines(week: int):
             # Skip games where odds data is not available
             continue
     
-    return games_data
+    return games_data, earliest_ts
 
 if __name__ == "__main__":
     # Example usage
-    week = 17  # Change this to the desired week
-    lines = get_nfl_lines(week)
+    week = 1  # Change this to the desired week
+    lines, earliest_ts = get_nfl_lines(week)
     # Print each game on a single line with minimal whitespace
     print("[")
     for i, game in enumerate(lines):
@@ -63,3 +77,4 @@ if __name__ == "__main__":
         print(line)
     print("]")
     print(len(lines))
+    print(earliest_ts)
