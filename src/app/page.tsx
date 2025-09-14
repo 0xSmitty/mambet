@@ -118,8 +118,6 @@ function App() {
   if (isWeekLoading) return <p>Loading current week...</p>
   if (isWeekError) return <p>Error loading current week</p>
 
-  // get game count for contract input (lazy)
-  console.log(currentGames.length);
   return (
     <div className="container mx-auto px-4 py-8">
       <Navigation />

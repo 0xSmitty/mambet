@@ -66,7 +66,7 @@ def get_nfl_lines(week: int):
 
 if __name__ == "__main__":
     # Example usage
-    week = 1  # Change this to the desired week
+    week = 2  # Change this to the desired week
     lines, earliest_ts = get_nfl_lines(week)
     # Print each game on a single line with minimal whitespace
     print("[")
@@ -78,3 +78,4 @@ if __name__ == "__main__":
     print("]")
     print(len(lines))
     print(earliest_ts)
+    print(1000000000000000000)
