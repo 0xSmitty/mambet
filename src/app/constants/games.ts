@@ -33,10 +33,28 @@ export const games: Game[][] = [
 		{"spread": -3.5, "away": "ATL", "home": "MIN"},
 		{"spread": -2.5, "away": "TB", "home": "HOU"},
 		{"spread": 3.5, "away": "LAC", "home": "LV"}
+	],
+	[
+		{"spread": 7.5, "away": "GB", "home": "CLE"},
+		{"spread": 4.5, "away": "IND", "home": "TEN"},
+		{"spread": -2.5, "away": "CIN", "home": "MIN"},
+		{"spread": 2.5, "away": "PIT", "home": "NE"},
+		{"spread": -3.5, "away": "LAR", "home": "PHI"},
+		{"spread": -6.5, "away": "NYJ", "home": "TB"},
+		{"spread": -2.5, "away": "LV", "home": "WSH"},
+		{"spread": 5.5, "away": "ATL", "home": "CAR"},
+		{"spread": -1.5, "away": "HOU", "home": "JAX"},
+		{"spread": -2.5, "away": "DEN", "home": "LAC"},
+		{"spread": -7.5, "away": "NO", "home": "SEA"},
+		{"spread": 1.5, "away": "DAL", "home": "CHI"},
+		{"spread": -1.5, "away": "ARI", "home": "SF"},
+		{"spread": 6.5, "away": "KC", "home": "NYG"},
+		{"spread": -4.5, "away": "DET", "home": "BAL"}
 	]
 ]
 
 export const weekIdToWeekNumber: string[] = [
 	"1",
-	"2"
+	"2",
+	"3"
 ]
