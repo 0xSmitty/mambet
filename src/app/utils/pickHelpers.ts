@@ -45,7 +45,6 @@ export const generateResolveWeekString = (games: Game[], results: GameResult[]) 
     // Find the corresponding result
     const result = results.find(r => r.homeTeam == game.home && r.awayTeam == game.away);
     if (!result) {
-      console.warn(`No matching result found for ${game.away} @ ${game.home}`);
       return '0'; // Default to '0' if no result is found
     }
 

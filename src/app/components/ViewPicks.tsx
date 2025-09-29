@@ -6,6 +6,7 @@ import { useAllParticipantsPicks } from '../hooks/useAllParticipantsPicks'
 import { useNameCache } from '../hooks/useNameCache'
 import { useGameResults } from '../hooks/useGameResults'
 import { Address } from 'viem'
+import { formatAddress } from '../utils/format'
 
 // Create a cache outside the component to persist across re-renders
 const nameCache: { [key: string]: string } = {}
@@ -108,7 +109,7 @@ const ViewPicks: React.FC = () => {
         >
           {participants.map((participant) => (
             <option key={participant} value={participant}>
-              {addressNames[participant] || participant}
+              {addressNames[participant] || formatAddress(participant)}
             </option>
           ))}
         </select>

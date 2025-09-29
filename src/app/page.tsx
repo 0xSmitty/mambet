@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import { useAccount } from 'wagmi'
 import Navigation from './components/Navbar/Navigation'
 import GamePicker, { Game, PickResult } from './components/GamePicker'
 import SubmitButton from './components/SubmitButton'
 import ViewPicks from './components/ViewPicks'
+import Leaderboard from './components/Leaderboard'
 import WeekInfoDisplay from './components/WeekInfoDisplay'
 import { games, weekIdToWeekNumber } from './constants/games'
 import usePicksSubmission from './hooks/usePicksSubmission'
@@ -13,12 +14,14 @@ import { useUserPicks } from './hooks/useUserPicks'
 import { useCurrentWeek } from './hooks/useCurrentWeek'
 import { useWeekInfo } from './hooks/useWeekInfo'
 import { useGameResults } from './hooks/useGameResults'
+import { useSeasonGameResults } from './hooks/useSeasonGameResults'
 import { generateResolveWeekString } from './utils/pickHelpers'
 import { getPickResult } from './utils/pickHelpers'
+import { useSeasonParticipantsPicks } from './hooks/useSeasonParticipantsPicks'
 
 function App() {
   const { address } = useAccount()
-  const [activeTab, setActiveTab] = useState<'make-picks' | 'view-picks'>('make-picks')
+  const [activeTab, setActiveTab] = useState<'make-picks' | 'view-picks' | 'leaderboard'>('make-picks')
   const [picks, setPicks] = useState<{ [key: number]: 'away' | 'home' | null }>({})
   const [hasPicked, setHasPicked] = useState(false);
   const { submitPicks, isPicksError, isLoading: isSubmitLoading, isSuccess } = usePicksSubmission()
@@ -31,6 +34,11 @@ function App() {
     }
     weekNumber = Number(weekIdToWeekNumber[currentWeek]);
   }
+
+  // Fetch leaderboard data at the app level to prevent re-fetching on tab switches
+  const weekNumbers = useMemo(() => Array.from({ length: games.length }, (_, i) => i), [])
+  const { gameResults: allGameResults, isLoading: isAllResultsLoading, error: allResultsError } = useSeasonGameResults(weekNumbers)
+  const { picks: allPicks, isLoading: isAllPicksLoading, isError: isAllPicksError } = useSeasonParticipantsPicks(weekNumbers)
 
   const { weekInfo, isLoading: isWeekInfoLoading, isError: isWeekInfoError } = useWeekInfo(currentWeek);
   const [currentGames, setCurrentGames] = useState<Game[]>([])
@@ -138,7 +146,7 @@ function App() {
               Make Picks
             </button>
             <button
-              className={`px-6 py-2 rounded-full font-semibold transition-colors duration-200 ${
+              className={`px-6 py-2 mr-4 rounded-full font-semibold transition-colors duration-200 ${
                 activeTab === 'view-picks'
                   ? 'bg-blue-500 text-white shadow-md'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -147,35 +155,53 @@ function App() {
             >
               View Picks
             </button>
+            <button
+              className={`px-6 py-2 rounded-full font-semibold transition-colors duration-200 ${
+                activeTab === 'leaderboard'
+                  ? 'bg-blue-500 text-white shadow-md'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+              onClick={() => setActiveTab('leaderboard')}
+            >
+              Leaderboard
+            </button>
           </div>
-          {activeTab === 'make-picks' ? (
-            <>
-              {correctPicksCount > 0 ?
-              <div className="mt-4 text-center">
-                <span className="font-bold">Correct Picks: {correctPicksCount}</span>
-              </div> : null}
-              <GamePicker 
-                games={currentGames} 
-                picks={picks} 
-                onPickSelection={handlePickSelection} 
-                viewOnly={isClosed} 
-                pickResults={pickResults}
-              />
-              {address ? (
-              <SubmitButton 
-                onSubmit={() => submitPicks(picks, currentGames.length, hasPicked)} 
-                hasPicked={hasPicked}
-                isLoading={isSubmitLoading}
-                isError={isPicksError}
-                error={isPicksError ? "Error submitting picks" : null}
-                isClosed={isClosed}
-                isFilledOut={Object.keys(picks).length === currentGames.length}
-              />
-              ) : null}
-            </>
-          ) : (
+          
+          {/* Make Picks Tab */}
+          <div style={{ display: activeTab === 'make-picks' ? 'block' : 'none' }}>
+            {correctPicksCount > 0 ?
+            <div className="mt-4 text-center">
+              <span className="font-bold">Correct Picks: {correctPicksCount}</span>
+            </div> : null}
+            <GamePicker 
+              games={currentGames} 
+              picks={picks} 
+              onPickSelection={handlePickSelection} 
+              viewOnly={isClosed} 
+              pickResults={pickResults}
+            />
+            {address ? (
+            <SubmitButton 
+              onSubmit={() => submitPicks(picks, currentGames.length, hasPicked)} 
+              hasPicked={hasPicked}
+              isLoading={isSubmitLoading}
+              isError={isPicksError}
+              error={isPicksError ? "Error submitting picks" : null}
+              isClosed={isClosed}
+              isFilledOut={Object.keys(picks).length === currentGames.length}
+            />
+            ) : null}
+          </div>
+
+          {/* View Picks Tab */}
+          <div style={{ display: activeTab === 'view-picks' ? 'block' : 'none' }}>
             <ViewPicks />
-          )}
+          </div>
+
+          {/* Leaderboard Tab */}
+          <div style={{ display: activeTab === 'leaderboard' ? 'block' : 'none' }}>
+            <Leaderboard gameResults={allGameResults} pickResults={allPicks} isLoading={isAllResultsLoading} error={allResultsError} />
+          </div>
         </div>
     </div>
   )

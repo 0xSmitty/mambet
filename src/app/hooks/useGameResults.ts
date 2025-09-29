@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-
+import { getWeekResults } from '../services/gameResultsCache'
 interface GameResult {
   homeTeam: string
   homeTeamLogoURL: string
@@ -22,8 +22,7 @@ export const useGameResults = (week: number | undefined) => {
       setIsLoading(true)
       setError(null)
       try {
-        const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2025&seasontype=2&week=${week}`)
-        const data = await response.json()
+        const data = await getWeekResults(week)
         
         const processedResults = data.events.map((event: any) => {
           const competition = event.competitions[0]

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { formatEther } from 'viem'
 import { useNameCache } from '../hooks/useNameCache'
 import { Address } from 'viem'
+import { formatAddress } from '../utils/format'
 
 interface WeekInfoDisplayProps {
   prizePool: bigint
@@ -34,7 +35,7 @@ const WeekInfoDisplay: React.FC<WeekInfoDisplayProps> = ({ prizePool, participan
 
   const getDisplayName = (address: string): string => {
     const name = addressNames[address]
-    return name || address.slice(0, 6) + '...'
+    return name || formatAddress(address as Address)
   }
 
   const participantSpans = participants.map((participant, index) => (

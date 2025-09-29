@@ -1,0 +1,67 @@
+import { useState, useEffect } from 'react'
+import { getWeekResults } from '../services/gameResultsCache'
+
+interface GameResult {
+  homeTeam: string
+  homeTeamLogoURL: string
+  awayTeam: string
+  awayTeamLogoURL: string
+  homeScore: number
+  awayScore: number
+  completed: boolean
+}
+
+export const useSeasonGameResults = (weeks: number[] | undefined) => {
+  const [gameResults, setGameResults] = useState<{ [weekNumber: number]: GameResult[] }>({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (weeks === undefined || weeks.length === 0) return
+
+    const fetchAllGameResults = async () => {
+      setIsLoading(true)
+      setError(null)
+      
+      try {
+        // Fetch results for all weeks in parallel
+        const fetchPromises = weeks.map(async (week) => {
+          const data = await getWeekResults(week + 1)
+          const processedResults = data.events.map((event: any) => {
+            const competition = event.competitions[0]
+            const [home, away] = competition.competitors
+            return {
+              homeTeam: home.team.abbreviation,
+              homeTeamLogoURL: home.team.logo,
+              awayTeam: away.team.abbreviation,
+              awayTeamLogoURL: away.team.logo,
+              homeScore: parseInt(home.score),
+              awayScore: parseInt(away.score),
+              completed: event.status.type.completed
+            }
+          })
+          
+          return { week, results: processedResults }
+        })
+
+        const allResults = await Promise.all(fetchPromises)
+        
+        // Convert array of results to object keyed by week number
+        const resultsObject = allResults.reduce((acc, { week, results }) => {
+          acc[week] = results
+          return acc
+        }, {} as { [weekNumber: number]: GameResult[] })
+        
+        setGameResults(resultsObject)
+      } catch (err) {
+        setError('Failed to fetch game results')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchAllGameResults()
+  }, [weeks])
+
+  return { gameResults, isLoading, error }
+}

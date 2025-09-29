@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { mamboProfileInstance } from '../services/mamboProfileInstance';
 import { Address } from 'viem';
+import { formatAddress } from '../utils/format';
 
 const globalNameCache: { [key: string]: string } = {};
 
@@ -16,7 +17,7 @@ export function useNameCache() {
       
       if (profiles !== undefined) {
         const newNames = Object.entries(profiles).reduce((acc, [address, profile]) => {
-          acc[address] = profile.mamboName || profile.avvyName || address;
+          acc[address] = profile.mamboName || profile.avvyName || formatAddress(address as Address);
           return acc;
         }, {} as Record<string, string>);
         
