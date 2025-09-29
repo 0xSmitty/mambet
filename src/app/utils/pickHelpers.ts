@@ -5,7 +5,7 @@ export const convertPicksToString = (picks: { [key: number]: 'away' | 'home' | n
   return Object.values(picks).map(pick => pick === 'home' ? '1' : '0').join('')
 }
 
-export const convertBytesToPicks = (bytes32: string, numGames: number): number[] => {
+export const convertBytesToPicks = (bytes32: string, numGames: number): Array<0 | 1> => {
   if (!bytes32 || bytes32 === '0x0000000000000000000000000000000000000000000000000000000000000000') {
     return []
   }
@@ -16,7 +16,7 @@ export const convertBytesToPicks = (bytes32: string, numGames: number): number[]
   // Get only the relevant bits (from right to left)
   const relevantBits = binaryString.slice(-numGames)
   // Convert binary string to array of picks (0 for away, 1 for home)
-  return relevantBits.split('').map(Number)
+  return relevantBits.split('').map(Number) as Array<0 | 1>
 }
 
 export const isPickCorrect = (game: Game, pick: 'away' | 'home', result: GameResult) => {

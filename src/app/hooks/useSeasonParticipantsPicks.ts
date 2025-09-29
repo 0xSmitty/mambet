@@ -16,7 +16,7 @@ interface Week {
 }
 
 export const useSeasonParticipantsPicks = (weeks: number[]) => {
-  const [picks, setPicks] = useState<{ [week: number]: { [address: string]: { [gameId: number]: number } } }>({})
+  const [picks, setPicks] = useState<{ [week: number]: { [address: string]: { [gameId: number]: 0 | 1 } } }>({})
   const [participants, setParticipants] = useState<{ [week: number]: Address[] }>({})
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
@@ -59,7 +59,7 @@ export const useSeasonParticipantsPicks = (weeks: number[]) => {
 
     if (!isWeekInfoLoading && !isPicksLoading && weekInfos && picksData) {
       const newParticipants: { [week: number]: Address[] } = {}
-      const newPicks: { [week: number]: { [address: string]: { [gameId: number]: number } } } = {}
+      const newPicks: { [week: number]: { [address: string]: { [gameId: number]: 0 | 1 } } } = {}
 
       weeks.forEach((week, idx) => {
         const weekInfo = weekInfos[idx]?.result as Week | undefined
