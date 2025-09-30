@@ -77,14 +77,14 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ gameResults, pickResults, isL
 
     
     return (
-        <div className="w-full max-w-xl mx-auto p-4">
-            <h1 className="text-5xl font-bold mb-6 text-center text-white">Leaderboard</h1>
-            <div className="overflow-x-auto">
-                <table className="min-w-full">
+        <div className="w-full max-w-xl mx-auto px-2 sm:px-4">
+            <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-center text-white">Leaderboard</h1>
+            <div className="overflow-hidden">
+                <table className="w-full">
                     <thead>
                         <tr>
-                            <th className="px-3 py-1 text-left text-2xl font-bold text-white">Player</th>
-                            <th className="px-3 py-1 text-right text-2xl font-bold text-white">Record</th>
+                            <th className="px-2 sm:px-3 py-1 text-left text-xl sm:text-2xl font-bold text-white">Player</th>
+                            <th className="px-2 sm:px-3 py-1 text-right text-xl sm:text-2xl font-bold text-white">Record</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-800">
@@ -92,10 +92,10 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ gameResults, pickResults, isL
                             .sort((a, b) => b.correctPicks - a.correctPicks)
                             .map((player) => (
                                 <tr key={player.address}>
-                                    <td className="px-3 py-2 text-xl text-gray-300">
+                                    <td className="px-2 sm:px-3 py-2 text-lg sm:text-xl text-gray-300 truncate max-w-[200px]">
                                         {addressNames[player.address] || formatAddress(player.address)}
                                     </td>
-                                    <td className="px-3 py-2 text-xl text-right text-gray-300">
+                                    <td className="px-2 sm:px-3 py-2 text-lg sm:text-xl text-right text-gray-300">
                                         {`${player.correctPicks} - ${player.incorrectPicks}`}
                                     </td>
                                 </tr>
