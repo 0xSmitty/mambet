@@ -22,6 +22,9 @@ interface PlayerData {
 }
 
 const getPickResult = (game: Game, pick: 0 | 1, result: GameResult): PickResult => {
+    if (result.homeScore == 0 && result.awayScore == 0) {
+        return 'draw'
+    }
     const adjustedHomeScore = result.homeScore + game.spread
     if (adjustedHomeScore === result.awayScore) {
       return 'draw'
