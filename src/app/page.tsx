@@ -28,8 +28,10 @@ function App() {
   let { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
 
   let weekNumber = undefined;
+  console.log("currentWeek: ", currentWeek);
   if(currentWeek !== undefined) {
     if(games[currentWeek] === undefined) {
+      console.log("games undefined");
       currentWeek = currentWeek - 1;
     }
     weekNumber = Number(weekIdToWeekNumber[currentWeek]);
