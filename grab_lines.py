@@ -14,8 +14,8 @@ def get_nfl_lines(week: int):
     
     # Process each game in the events array
     for game in scoreboard_data.get('events', []):
-        # Skip completed games
-        if game['status']['type']['completed']:
+        # Skip non-scheduled games
+        if game['status']['type']['name'] != 'STATUS_SCHEDULED':
             continue
             
         game_id = game['id']
@@ -47,7 +47,7 @@ def get_nfl_lines(week: int):
         odds_data = odds_response.json()
         
         # Add sleep between odds requests
-        time.sleep(2)
+        time.sleep(1)
         
         # Extract spread from the first odds item
         try:
@@ -66,7 +66,7 @@ def get_nfl_lines(week: int):
 
 if __name__ == "__main__":
     # Example usage
-    week = 16  # Change this to the desired week
+    week = 17  # Change this to the desired week
     lines, earliest_ts = get_nfl_lines(week)
     # Print each game on a single line with minimal whitespace
     print("[")
