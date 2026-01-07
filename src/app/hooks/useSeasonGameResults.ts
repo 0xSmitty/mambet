@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getWeekResults } from '../services/gameResultsCache'
+import { weekIdToWeekNumber } from '../constants/games'
 
 interface GameResult {
   homeTeam: string
@@ -26,7 +27,9 @@ export const useSeasonGameResults = (weeks: number[] | undefined) => {
       try {
         // Fetch results for all weeks in parallel
         const fetchPromises = weeks.map(async (week) => {
-          const data = await getWeekResults(week + 1)
+          let weekNumber = weekIdToWeekNumber[week].weekId;
+          let seasonType = weekIdToWeekNumber[week].seasonType;
+          const data = await getWeekResults(weekNumber, seasonType)
           const processedResults = data.events.map((event: any) => {
             const competition = event.competitions[0]
             const [home, away] = competition.competitors
