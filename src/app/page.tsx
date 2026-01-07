@@ -8,7 +8,7 @@ import SubmitButton from './components/SubmitButton'
 import ViewPicks from './components/ViewPicks'
 import Leaderboard from './components/Leaderboard'
 import WeekInfoDisplay from './components/WeekInfoDisplay'
-import { games, weekIdToWeekNumber } from './constants/games'
+import { games, weekIdToWeekNumber, WeekNumberData } from './constants/games'
 import usePicksSubmission from './hooks/usePicksSubmission'
 import { useUserPicks } from './hooks/useUserPicks'
 import { useCurrentWeek } from './hooks/useCurrentWeek'
@@ -27,14 +27,15 @@ function App() {
   const { submitPicks, isPicksError, isLoading: isSubmitLoading, isSuccess } = usePicksSubmission()
   let { currentWeek, isLoading: isWeekLoading, isError: isWeekError } = useCurrentWeek()
 
-  let weekNumber = undefined;
+  let weekNumber, seasonType = undefined;
   console.log("currentWeek: ", currentWeek);
   if(currentWeek !== undefined) {
     if(games[currentWeek] === undefined) {
       console.log("games undefined");
       currentWeek = currentWeek - 1;
     }
-    weekNumber = Number(weekIdToWeekNumber[currentWeek]);
+    weekNumber = weekIdToWeekNumber[currentWeek].weekId;
+    seasonType = weekIdToWeekNumber[currentWeek].seasonType;
   }
 
   // Fetch leaderboard data at the app level to prevent re-fetching on tab switches
@@ -51,11 +52,12 @@ function App() {
     if(games[currentWeek] === undefined) {
       currentWeek = currentWeek - 1;
     }
-    weekNumber = Number(weekIdToWeekNumber[currentWeek]);
+    weekNumber = weekIdToWeekNumber[currentWeek].weekId;
+    seasonType = weekIdToWeekNumber[currentWeek].seasonType;
   }
 
   const { userPicks, isLoading: isUserPicksLoading, isError: isUserPicksError } = useUserPicks(currentWeek, currentGames.length);
-  const { gameResults, isLoading: isResultsLoading, error: resultsError } = useGameResults(weekNumber)
+  const { gameResults, isLoading: isResultsLoading, error: resultsError } = useGameResults(weekNumber, seasonType)
 
   useEffect(() => {
     if (userPicks.length > 0) {

@@ -26,8 +26,9 @@ const ViewPicks: React.FC = () => {
 
   const { picks: allPicks, participants, isLoading: isPicksLoading, isError: isPicksError } = useAllParticipantsPicks(selectedWeek)
 
-  let weekNumber = selectedWeek !== undefined ? Number(weekIdToWeekNumber[selectedWeek]) : 0;
-  const { gameResults, isLoading: isResultsLoading, error: resultsError } = useGameResults(weekNumber)
+  let weekNumber = selectedWeek !== undefined ? weekIdToWeekNumber[selectedWeek].weekId : 0;
+  let seasonType = selectedWeek !== undefined ? weekIdToWeekNumber[selectedWeek].seasonType : 2;
+  const { gameResults, isLoading: isResultsLoading, error: resultsError } = useGameResults(weekNumber, seasonType)
   const [pickResults, setPickResults] = useState<{ [key: number]: PickResult }>({})
   const weekOptions = Array.from({ length: Number(currentWeek) + 1 }, (_, i) => i)
   const currentGames = selectedWeek !== undefined ? games[selectedWeek] : []
@@ -95,7 +96,7 @@ const ViewPicks: React.FC = () => {
           className="border rounded p-1"
         >
           {weekOptions.map((week) => (
-            <option key={week} value={week}>{"Week " + weekIdToWeekNumber[week]}</option>
+            <option key={week} value={week}>{weekIdToWeekNumber[week].seasonType === 2 ? "Week " + weekIdToWeekNumber[week].weekId : "Playoffs Week " + weekIdToWeekNumber[week].weekId}</option>
           ))}
         </select>
       </div>

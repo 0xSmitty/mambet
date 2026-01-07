@@ -276,23 +276,28 @@ export const games: Game[][] = [
 	  ]
 ]
 
-export const weekIdToWeekNumber: string[] = [
-	"1",
-	"2",
-	"3",
-	"4",
-	"5",
-	"6",
-	"7",
-	"8",
-	"9",
-	"10",
-	"11",
-	"12",
-	"14",
-	"15",
-	"16",
-	"17",
-	"18",
-	"Wild Card"
+export interface WeekNumberData {
+	weekId: number;
+	seasonType: number;
+}
+export const weekIdToWeekNumber: WeekNumberData[] = [
+	{ weekId: 1, seasonType: 2 },
+	{ weekId: 2, seasonType: 2 },
+	{ weekId: 3, seasonType: 2 },
+	{ weekId: 4, seasonType: 2 },
+	{ weekId: 5, seasonType: 2 },
+	{ weekId: 6, seasonType: 2 },
+	{ weekId: 7, seasonType: 2 },
+	{ weekId: 8, seasonType: 2 },
+	{ weekId: 9, seasonType: 2 },
+	{ weekId: 10, seasonType: 2 },
+	{ weekId: 11, seasonType: 2 },
+	{ weekId: 12, seasonType: 2 },
+	{ weekId: 14, seasonType: 2 },
+	{ weekId: 15, seasonType: 2 },
+	{ weekId: 16, seasonType: 2 },
+	{ weekId: 17, seasonType: 2 },
+	{ weekId: 18, seasonType: 2 },
+	{ weekId: 1, seasonType: 3 }
 ]
+

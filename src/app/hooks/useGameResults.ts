@@ -10,7 +10,7 @@ interface GameResult {
   completed: boolean
 }
 
-export const useGameResults = (week: number | undefined) => {
+export const useGameResults = (week: number | undefined, seasonType: number | undefined) => {
   const [gameResults, setGameResults] = useState<GameResult[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -22,7 +22,7 @@ export const useGameResults = (week: number | undefined) => {
       setIsLoading(true)
       setError(null)
       try {
-        const data = await getWeekResults(week)
+        const data = await getWeekResults(week, seasonType)
         
         const processedResults = data.events.map((event: any) => {
           const competition = event.competitions[0]
