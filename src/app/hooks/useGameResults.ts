@@ -16,7 +16,7 @@ export const useGameResults = (week: number | undefined, seasonType: number | un
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (week === undefined) return
+    if (week === undefined || seasonType === undefined) return
 
     const fetchGameResults = async () => {
       setIsLoading(true)
