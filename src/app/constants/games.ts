@@ -25,6 +25,6 @@ export interface WeekNumberData {
     seasonType: number;
 }
 export const weekIdToWeekNumber: WeekNumberData[] = [
-    { weekId: 3, seasonType: 2 },
+    { weekId: 1, seasonType: 2 },
 ]
 
