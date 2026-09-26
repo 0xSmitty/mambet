@@ -4,7 +4,7 @@ export const getWeekResults = async (week: number, seasonType: number) => {
     if (globalGameResultsCache[week]) {
         return globalGameResultsCache[week];
     }
-    const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2025&seasontype=${seasonType}&week=${week}`)
+    const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype=${seasonType}&week=${week}`)
     const data = await response.json()
     globalGameResultsCache[week] = data;
     return data;
