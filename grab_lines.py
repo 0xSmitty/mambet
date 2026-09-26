@@ -3,11 +3,11 @@ import json
 import time
 import datetime
 
-SEASON_TYPE = 3 # 2 for regular seasion, 3 for postseason
+SEASON_TYPE = 2 # 2 for regular seasion, 3 for postseason
 
 def get_nfl_lines(week: int):
     # Get the scoreboard data for the specified week
-    scoreboard_url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2025&seasontype={SEASON_TYPE}&week={week}"
+    scoreboard_url = f"https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype={SEASON_TYPE}&week={week}"
     scoreboard_response = requests.get(scoreboard_url)
     scoreboard_data = scoreboard_response.json()
 
@@ -49,7 +49,7 @@ def get_nfl_lines(week: int):
         odds_data = odds_response.json()
         
         # Add sleep between odds requests
-        time.sleep(.5)
+        time.sleep(.1)
         
         # Extract spread from the first odds item
         try:
@@ -68,7 +68,7 @@ def get_nfl_lines(week: int):
 
 if __name__ == "__main__":
     # Example usage
-    week = 1  # Change this to the desired week
+    week = 3  # Change this to the desired week
     lines, earliest_ts = get_nfl_lines(week)
     # Print each game on a single line with minimal whitespace
     print("[")
