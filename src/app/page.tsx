@@ -31,8 +31,6 @@ function App() {
   console.log("currentWeek: ", currentWeek);
   if(currentWeek !== undefined) {
     if(games[currentWeek] === undefined) {
-      console.log(games);
-      console.log(currentWeek);
       console.log("games undefined");
       currentWeek = currentWeek - 1;
     }
