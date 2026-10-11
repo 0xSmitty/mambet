@@ -34,7 +34,22 @@ export const games: Game[][] = [
         {"spread": -7.0, "away": "LAC", "home": "SEA"},
         {"spread": 3.5, "away": "DET", "home": "CAR"},
         {"spread": -2.5, "away": "ATL", "home": "NO"}
-    ]
+    ],
+    [
+  {"spread": 1.5, "away": "CHI", "home": "GB"},
+  {"spread": 7.0, "away": "HOU", "home": "TEN"},
+  {"spread": 7.0, "away": "CIN", "home": "MIA"},
+  {"spread": -3.5, "away": "LV", "home": "NE"},
+  {"spread": 2.5, "away": "MIN", "home": "NO"},
+  {"spread": -2.5, "away": "CLE", "home": "NYJ"},
+  {"spread": -3.0, "away": "IND", "home": "PIT"},
+  {"spread": -3.5, "away": "NYG", "home": "WSH"},
+  {"spread": 3.5, "away": "DEN", "home": "LAC"},
+  {"spread": 5.5, "away": "DET", "home": "ARI"},
+  {"spread": -3.0, "away": "SF", "home": "SEA"},
+  {"spread": -3.0, "away": "BAL", "home": "ATL"},
+  {"spread": -3.5, "away": "BUF", "home": "LAR"}
+]
 ]
 
 export interface WeekNumberData {
@@ -44,5 +59,6 @@ export interface WeekNumberData {
 export const weekIdToWeekNumber: WeekNumberData[] = [
     { weekId: 3, seasonType: 2 },
     { weekId: 4, seasonType: 2 },
+    { weekId: 5, seasonType: 2 },
 ]
 

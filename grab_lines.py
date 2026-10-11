@@ -2,8 +2,28 @@ import requests
 import json
 import time
 import datetime
+from zoneinfo import ZoneInfo
 
 SEASON_TYPE = 2 # 2 for regular seasion, 3 for postseason
+EASTERN = ZoneInfo("America/New_York")
+
+def parse_start(game):
+    date_str = game.get('date')
+    if not date_str:
+        return None
+    try:
+        return datetime.datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+    except (ValueError, TypeError):
+        return None
+
+def get_sunday_cutoff(events):
+    # The week's Sunday is the first Sunday on or after its earliest game; cutoff is 1pm ET that day
+    starts = [dt for dt in (parse_start(game) for game in events) if dt]
+    if not starts:
+        return None
+    first_day = min(starts).astimezone(EASTERN).date()
+    sunday = first_day + datetime.timedelta(days=(6 - first_day.weekday()) % 7)
+    return datetime.datetime.combine(sunday, datetime.time(13, 0), tzinfo=EASTERN)
 
 def get_nfl_lines(week: int):
     # Get the scoreboard data for the specified week
@@ -13,28 +33,28 @@ def get_nfl_lines(week: int):
 
     games_data = []
     earliest_ts = None
-    
+    events = scoreboard_data.get('events', [])
+    cutoff = get_sunday_cutoff(events)
+
     # Process each game in the events array
-    for game in scoreboard_data.get('events', []):
+    for game in events:
         # Skip non-scheduled games
         if game['status']['type']['name'] != 'STATUS_SCHEDULED':
             continue
-            
+
+        # Skip games before 1pm ET Sunday (Thursday, international, Saturday games)
+        start_dt = parse_start(game)
+        if start_dt is None or cutoff is None or start_dt < cutoff:
+            continue
+
         game_id = game['id']
         competitors = game['competitions'][0]['competitors']
-        
+
         # Capture start time
-        date_str = game.get('date')
-        start_ts = None
-        if date_str:
-            try:
-                dt = datetime.datetime.fromisoformat(date_str.replace('Z', '+00:00'))
-                start_ts = int(dt.timestamp())
-                if earliest_ts is None or start_ts < earliest_ts:
-                    earliest_ts = start_ts
-            except (ValueError, TypeError):
-                start_ts = None
-        
+        start_ts = int(start_dt.timestamp())
+        if earliest_ts is None or start_ts < earliest_ts:
+            earliest_ts = start_ts
+
         # Find home and away teams
         home_team = next(team['team']['abbreviation'] 
                         for team in competitors 
@@ -68,7 +88,7 @@ def get_nfl_lines(week: int):
 
 if __name__ == "__main__":
     # Example usage
-    week = 4  # Change this to the desired week
+    week = 5  # Change this to the desired week
     lines, earliest_ts = get_nfl_lines(week)
     # Print each game on a single line with minimal whitespace
     print("[")
