@@ -49,6 +49,20 @@ export const games: Game[][] = [
   {"spread": -3.0, "away": "SF", "home": "SEA"},
   {"spread": -3.0, "away": "BAL", "home": "ATL"},
   {"spread": -3.5, "away": "BUF", "home": "LAR"}
+],
+[
+  {"spread": 1.5, "away": "CHI", "home": "ATL"},
+  {"spread": 3.0, "away": "BAL", "home": "CLE"},
+  {"spread": -7.0, "away": "TEN", "home": "IND"},
+  {"spread": -7.5, "away": "NYJ", "home": "NE"},
+  {"spread": -1.5, "away": "NO", "home": "NYG"},
+  {"spread": 3.0, "away": "CAR", "home": "PHI"},
+  {"spread": 2.5, "away": "PIT", "home": "TB"},
+  {"spread": -12.5, "away": "ARI", "home": "LAR"},
+  {"spread": -7.5, "away": "LAC", "home": "KC"},
+  {"spread": 5.5, "away": "BUF", "home": "LV"},
+  {"spread": -1.5, "away": "DAL", "home": "GB"},
+  {"spread": -7.5, "away": "WSH", "home": "SF"}
 ]
 ]
 
