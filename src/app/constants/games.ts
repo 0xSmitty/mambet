@@ -74,5 +74,6 @@ export const weekIdToWeekNumber: WeekNumberData[] = [
     { weekId: 3, seasonType: 2 },
     { weekId: 4, seasonType: 2 },
     { weekId: 5, seasonType: 2 },
+    { weekId: 6, seasonType: 2 },
 ]
 
