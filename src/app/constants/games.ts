@@ -65,18 +65,19 @@ export const games: Game[][] = [
   {"spread": -7.5, "away": "WSH", "home": "SF"}
 ],
 [
-  {"spread": 2.5, "away": "SF", "home": "ATL"},
-  {"spread": 2.5, "away": "CLE", "home": "TEN"},
-  {"spread": -6.5, "away": "IND", "home": "MIN"},
-  {"spread": -4.5, "away": "MIA", "home": "NYJ"},
-  {"spread": -3.0, "away": "TB", "home": "CAR"},
-  {"spread": 3.0, "away": "CIN", "home": "BAL"},
-  {"spread": -10.0, "away": "NYG", "home": "HOU"},
-  {"spread": 4.5, "away": "DEN", "home": "ARI"},
-  {"spread": -3.5, "away": "GB", "home": "DET"},
-  {"spread": 3.0, "away": "LAR", "home": "LV"},
-  {"spread": -3.0, "away": "KC", "home": "SEA"},
-  {"spread": 4.5, "away": "DAL", "home": "PHI"}
+  {"spread": 4.5, "away": "DAL", "home": "IND"},
+  {"spread": -9.5, "away": "NYJ", "home": "KC"},
+  {"spread": 6.5, "away": "DET", "home": "MIA"},
+  {"spread": -3.5, "away": "CLE", "home": "NO"},
+  {"spread": 3.0, "away": "NYG", "home": "PHI"},
+  {"spread": 4.5, "away": "LAR", "home": "WSH"},
+  {"spread": 2.5, "away": "DEN", "home": "CAR"},
+  {"spread": 5.5, "away": "HOU", "home": "LAC"},
+  {"spread": -3.0, "away": "GB", "home": "NE"},
+  {"spread": -9.5, "away": "LV", "home": "SF"},
+  {"spread": -8.5, "away": "ARI", "home": "SEA"},
+  {"spread": -6.0, "away": "TB", "home": "CHI"},
+  {"spread": 3.0, "away": "BUF", "home": "MIN"}
 ]
 ]
 
@@ -90,6 +91,7 @@ export const weekIdToWeekNumber: WeekNumberData[] = [
     { weekId: 5, seasonType: 2 },
     { weekId: 6, seasonType: 2 },
     { weekId: 7, seasonType: 2 },
+    { weekId: 9, seasonType: 2 },
 
 ]
 
