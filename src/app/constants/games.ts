@@ -92,6 +92,20 @@ export const games: Game[][] = [
   {"spread": -8.5, "away": "ARI", "home": "SEA"},
   {"spread": -6.0, "away": "TB", "home": "CHI"},
   {"spread": 3.0, "away": "BUF", "home": "MIN"}
+],
+[
+  {"spread": 3.0, "away": "KC", "home": "ATL"},
+  {"spread": 4.5, "away": "HOU", "home": "CLE"},
+  {"spread": -2.5, "away": "MIN", "home": "GB"},
+  {"spread": 10.5, "away": "JAX", "home": "TEN"},
+  {"spread": -4.5, "away": "MIA", "home": "IND"},
+  {"spread": -1.5, "away": "CAR", "home": "NO"},
+  {"spread": 8.5, "away": "BUF", "home": "NYJ"},
+  {"spread": 6.5, "away": "SEA", "home": "LV"},
+  {"spread": 9.5, "away": "LAR", "home": "ARI"},
+  {"spread": 4.5, "away": "SF", "home": "DAL"},
+  {"spread": -3.5, "away": "PIT", "home": "CIN"},
+  {"spread": -4.5, "away": "LAC", "home": "BAL"}
 ]
 ]
 
@@ -106,6 +120,7 @@ export const weekIdToWeekNumber: WeekNumberData[] = [
     { weekId: 6, seasonType: 2 },
     { weekId: 7, seasonType: 2 },
     { weekId: 9, seasonType: 2 },
+    { weekId: 10, seasonType: 2 },
 
 ]
 
